@@ -8,7 +8,7 @@ services:
       TZ: America/Sao_Paulo
       MYSQL_ROOT_PASSWORD: 
       MYSQL_USER: docker
-      MYSQL_PASSWORD: 
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       MYSQL_DATABASE: rest_with_spring_boot_erudio
       MYSQL_ROOT_HOST: '%'
       MYSQL_TCP_PORT: 3308
@@ -19,7 +19,7 @@ services:
     networks:
       - erudio-network
   rest-with-spring-boot-erudio:
-    image: /rest-with-spring-boot-erudio
+    image: ${{ secrets.DOCKER_USERNAME }}/rest-with-spring-boot-erudio
     restart: always
     build: ./
     working_dir: /
@@ -27,7 +27,7 @@ services:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
       SPRING.DATASOURCE.USERNAME: root
-      SPRING.DATASOURCE.PASSWORD: 
+      SPRING.DATASOURCE.PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
     ports:
       - 80:80
     command: mvn spring-boot:run
